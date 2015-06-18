@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from lxml import etree
+import sys
 import urllib
 import pprint
 
@@ -9,28 +10,29 @@ import pprint
 # Check if currently stored file is from yesterday or older.  If it is download a new copy.
 # <need code here>
 
-# Initialize XML file list for iterating through when searching for IP.
-xml_file_list = []
+# Initialize XML file dictionary for iterating through when searching for IP.
+xml_file_list = {}
 
 # Download SBEFix NRCert
-url = 'ftp://ftp.cmegroup.com/SBEFix/NRCert/Configuration/config.xml'
-urllib.urlretrieve(url, 'sbefix_nrcert.xml')
-xml_file_list.append('sbefix_nrcert.xml')
-
+# Temporarily disabled
+# url = 'ftp://ftp.cmegroup.com/SBEFix/NRCert/Configuration/config.xml'
+# urllib.urlretrieve(url, 'sbefix_nrcert.xml')
+xml_file_list['SBEFix NRCert'] = 'sbefix_nrcert.xml'
 
 # Download SBEFix NRAutoCertPlus
-url = 'ftp://ftp.cmegroup.cme/CBEFix/NRAutoCertPlus/Configuration/config.xml'
-urllib.urlretrieve(url, 'sbefix_nrautocertplus.xml')
-xml_file_list.append('sbefix_nrautocertplus.xml')
+# Temporarily disabled
+# url = 'ftp://ftp.cmegroup.com/SBEFix/NRAutoCertPlus/Configuration/config.xml'
+# urllib.urlretrieve(url, 'sbefix_nrautocertplus.xml')
+xml_file_list['SBEFix NRAutoCertPlus'] = 'sbefix_nrautocertplus.xml'
 
 # Get IP from user
-ip = raw_input('Enter multicast groupo IP: ')
+# ip = raw_input('Enter multicast group IP: ')
+ip = sys.argv[1]
 found_ip = False
 
 
-
 # Search all XML files for IP by iterating through list of XML files.  Once IP is found then enter parsing function.
-for file in xml_file_list:
+for name,file in xml_file_list.iteritems():
 
 	# Parsing XML file
 	tree = etree.parse(file)
@@ -57,16 +59,19 @@ for file in xml_file_list:
 	
 			# Print all elements of a connection including channel information
 			print "\n"
+			print name
+			print "-----------------------------"
+			print "Channel label: %s" % channel_label
+			print "Channel ID: %s" % channel_id
 			print "Connection ID: %s" % connection_id
+			print "Feed side: %s" % feed
+			print "Source IP: %s" % host_ip
 			print "IP: %s" % ip
 			print "Port: %s" % port
-			print "Source IP: %s" % host_ip
-			print "Feed side: %s" % feed
-			print "Channel ID: %s" % channel_id
-			print "Channel label: %s" % channel_label
+			print "\n"
 			break
 
 # Inform user if IP was not found.
 if found_ip is False:
-	print("IP not found")
+	print("\nIP not found\n")
 
