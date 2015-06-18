@@ -5,25 +5,45 @@ import sys
 import urllib
 import pprint
 
+# Initialize XML file list with filesnames.
+xml_file_list = {'SBEFix NRAutoCertPlus': 'sbefix_nrautocertplus.xml',
+		 'SBEFix NRCert': 'sbefix_nrcert.xml',
+		  'SBEFix Production': 'sbefix_prod.xml'}
+
+
 # Downloading various config.xml files from CME FTP site ftp://www.cmegroup.com/
 
 # Check if currently stored file is from yesterday or older.  If it is download a new copy.
 # <need code here>
 
-# Initialize XML file dictionary for iterating through when searching for IP.
-xml_file_list = {}
+def check_get_xml_files(xml_files):
+	for name,file in xml_files.iteritems():
+		try:
+			# does files exist
+			# if not, download it
+			# if it does, check date
+				# if date older then today download new
+				# else keep current
+		except:
+			# ???
+
+
+
+
+# Download SBEFix Production
+# Temporarily disabled
+url = 'ftp://ftp.cmegroup.com/SBEFix/Production/Configuration/config.xml'
+urllib.urlretrieve(url, 'sbefix_prod.xml')
 
 # Download SBEFix NRCert
 # Temporarily disabled
 # url = 'ftp://ftp.cmegroup.com/SBEFix/NRCert/Configuration/config.xml'
 # urllib.urlretrieve(url, 'sbefix_nrcert.xml')
-xml_file_list['SBEFix NRCert'] = 'sbefix_nrcert.xml'
 
 # Download SBEFix NRAutoCertPlus
 # Temporarily disabled
 # url = 'ftp://ftp.cmegroup.com/SBEFix/NRAutoCertPlus/Configuration/config.xml'
 # urllib.urlretrieve(url, 'sbefix_nrautocertplus.xml')
-xml_file_list['SBEFix NRAutoCertPlus'] = 'sbefix_nrautocertplus.xml'
 
 # Get IP from user
 # ip = raw_input('Enter multicast group IP: ')
