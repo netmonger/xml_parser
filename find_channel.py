@@ -4,6 +4,7 @@ from lxml import etree
 import sys
 import urllib
 import pprint
+from dateutil.parser import parse
 
 # Initialize XML file list with filesnames.
 xml_file_list = {'SBEFix NRAutoCertPlus': 'sbefix_nrautocertplus.xml',
@@ -22,6 +23,7 @@ def check_get_xml_files(xml_files):
 			# does files exist
 			# if not, download it
 			# if it does, check date
+
 				# if date older then today download new
 				# else keep current
 		except:
